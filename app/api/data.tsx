@@ -93,7 +93,14 @@ export function setActiveUser(user: User | null) {
     return;
   }
 
-  localStorage.setItem("activeUser", JSON.stringify(user));
+  const normalizedUser = {
+    fullname: user.fullname?.trim() || "",
+    email: user.email?.trim().toLowerCase() || "",
+    password: user.password || "",
+    age: Number(user.age) || 18,
+  };
+
+  localStorage.setItem("activeUser", JSON.stringify(normalizedUser));
 }
 
 export function getActiveUser(): User | null {
@@ -107,7 +114,17 @@ export function getActiveUser(): User | null {
       return null;
     }
 
-    return JSON.parse(savedUser) as User;
+    const parsedUser = JSON.parse(savedUser) as Partial<User>;
+    if (!parsedUser?.email) {
+      return null;
+    }
+
+    return {
+      fullname: parsedUser.fullname || "",
+      email: parsedUser.email || "",
+      password: parsedUser.password || "",
+      age: Number(parsedUser.age) || 18,
+    };
   } catch (error) {
     console.error("Aktiv foydalanuvchini yuklashda xatolik:", error);
     return null;

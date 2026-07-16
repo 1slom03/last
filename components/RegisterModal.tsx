@@ -52,7 +52,6 @@ export default function RegisterModal({ open, onCloseAction, onSwitchAction }: P
 
         if (result.length > 0) {
             setActiveUser(newUser);
-            alert("Ro'yxatdan o'tdingiz!");
             onCloseAction();
             router.push("/profile");
         } else {

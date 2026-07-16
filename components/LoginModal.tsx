@@ -42,7 +42,6 @@ export default function LoginModal({ open, onCloseAction, onSwitchAction }: Prop
 
             if (user) {
                 setActiveUser(user);
-                alert("Muvaffaqiyatli kirdingiz!");
                 setLoading(false);
                 onCloseAction();
                 router.push("/profile");
